@@ -11,8 +11,6 @@ __pycache__/
 .venv/
 venv/
 
-# chroma vector store (rebuilt by running: uv run python app/rag/ingest.py)
-data/chroma_db/
 
 # uv cache
 .uv/
