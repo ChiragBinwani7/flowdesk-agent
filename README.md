@@ -20,12 +20,6 @@ Copy your Groq API key into `.env`:
 GROQ_API_KEY=your_key_here
 ```
 
-Ingest the product documentation into ChromaDB (only needed once):
-
-```
-uv run python -m app.rag.ingest
-```
-
 Start the API server:
 
 ```
@@ -119,3 +113,9 @@ uv run python tests/test_queries.py
 ```
 
 Current result: 25/25 passing.
+
+The ChromaDB vector store is already committed to the repo so no ingest step is needed. If you ever want to rebuild it from scratch (e.g. after editing the docs), run:
+
+```
+uv run python app/rag/ingest.py
+```
