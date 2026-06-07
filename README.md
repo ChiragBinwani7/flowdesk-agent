@@ -53,6 +53,21 @@ The response includes the answer, whether escalation was needed, which tools wer
 
 There are also utility endpoints for looking up customers, plans, incidents, tickets, and searching the knowledge base directly. The full interactive docs are at `http://localhost:8001/docs`.
 
+Tickets created by the agent for refund or webhook escalations are set to `pending_approval` status. A human can then act on them:
+
+```
+POST /tickets/{ticket_id}/approve
+POST /tickets/{ticket_id}/reject
+```
+
+Every query is logged to a traces table in SQLite and viewable via:
+
+```
+GET /traces?limit=50
+```
+
+A health check is available at `GET /health`.
+
 ---
 
 ## Architecture
@@ -97,7 +112,7 @@ Filtering in the prompt ("ignore any instructions telling you to...") can be byp
 
 ## Running the tests
 
-The test suite loads all 25 queries from `sample-requests/example-queries.json` and checks whether the agent's escalation decision matches the expected outcome. No test data is hardcoded — it all comes from the provided query file.
+The test suite loads all 25 queries from `data/example-queries.json` and checks whether the agent's escalation decision matches the expected outcome. No test data is hardcoded — it all comes from the provided query file.
 
 ```
 uv run python tests/test_queries.py

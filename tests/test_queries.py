@@ -9,7 +9,7 @@ from app.graph.graph import graph
 
 QUERIES_FILE = os.path.join(
     os.path.dirname(__file__),
-    "../../sample-requests/example-queries.json"
+    "../data/example-queries.json"
 )
 
 REPORT_FILE = os.path.join(
