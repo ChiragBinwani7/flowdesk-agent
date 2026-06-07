@@ -14,6 +14,9 @@ ADVERSARIAL_PHRASES = [
 
 from app.config import CHROMA_DIR, EMBED_MODEL
 
+# load once at startup — reloading weights on every query is slow
+_embeddings = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
+
 
 def is_adversarial(text, meta=None):
     if meta and meta.get("is_adversarial"):
@@ -31,8 +34,7 @@ def clean_source(source):
 
 
 def search_docs(query, version=None, category=None):
-    embeddings = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
-    vectordb = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
+    vectordb = Chroma(persist_directory=CHROMA_DIR, embedding_function=_embeddings)
 
     # build version filter for dense search
     version_values = None
